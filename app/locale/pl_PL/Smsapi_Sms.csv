@@ -71,3 +71,9 @@
 "Open registration form","Otwórz formularz rejestracyjny"
 
 "SMSAPI Module for Magento-based stores enables automatic send SMS notifications to customers. SMS communication has many benefits including facilitates communication with your customers and speeds up reaching the details of the order. Short text messages are sent primarily as information on the status of the order, such as a message confirming the correct course of a transaction or message about delivery time of orders. SMS is fastest communication with your customers, and savings for the company due to reduced costs associated with undelivered shipments. SMS notifications in Magento module can be sent from the field in active sender SMSAPI account. Content templates are fully editable.","Moduł SMSAPI dla sklepów opartych na Magento umożliwia automatyczne wysyłanie powiadomień SMS w sklepie. Komunikacja SMS daje wiele korzyści między innymi usprawnia komunikację z e-klientami oraz przyspiesza dotarcie informacji dotyczących zamówienia. Krótkie wiadomości tekstowe wysyłane są przede wszystkim jako informacje o statusie realizacji zamówienia, np. jako wiadomość potwierdzająca poprawny przebieg transakcji czy wiadomość o czasie dostarczenia zamówienia pod wskazany adres. Powiadomienia SMS to zarówno szybsza komunikacja z e-klientami, jak i oszczędność dla przedsiębiorstwa ze względu na ograniczenie kosztów związanych z niedostraczonymi przesyłkami. Powiadomienia SMS w module Magento mogą być wysyłane z pola nadawcy aktywnego w koncie SMSAPI. Szablony treści są w pełni edytowalne."
+
+"SMS notification sent", "Powiadomienie SMS zostało wysłane"
+
+"SMS notification error", "Błąd wysyłki powiadomienia sms",
+
+"You have used {TRACKINGNUMBER} variable but tracking number is not defined. Please delete {TRACKINGNUMBER} variable from the message.", "W wiadomości została użyta zmienna {TRACKINGNUMBER}, która nie jest zdefiniowana. Proszę usuń tę zmienną z wiadomości."

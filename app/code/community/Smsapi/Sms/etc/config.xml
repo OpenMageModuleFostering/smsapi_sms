@@ -35,7 +35,7 @@
 
     <modules>
         <Smsapi_Sms>
-            <version>0.1.2</version>
+            <version>0.1.3</version>
         </Smsapi_Sms>
     </modules>
 
@@ -50,26 +50,31 @@
                 <class>Smsapi_Sms_Model</class>
             </sms>
         </models>
-	    <events>
-		    <sales_order_save_commit_after>
-			    <observers>
-				    <smsapi_sms>
-					    <class>Smsapi_Sms_Model_Observer</class>
-					    <method>handleStatus</method>
-				    </smsapi_sms>
-			    </observers>
-		    </sales_order_save_commit_after>
-	    </events>
+        <events>
+            <sales_order_save_commit_after>
+                <observers>
+                    <smsapi_sms>
+                        <class>Smsapi_Sms_Model_Observer</class>
+                        <method>handleStatus</method>
+                    </smsapi_sms>
+                </observers>
+            </sales_order_save_commit_after>
+        </events>
         <blocks>
             <sms>
                 <class>Smsapi_Sms_Block</class>
             </sms>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_view_info>Smsapi_Sms_Block_Sales_Order_View_Info</sales_order_view_info>
+                </rewrite>
+            </adminhtml>
         </blocks>
     </global>
     <default>
         <sms>
-            <main_conf>                
-                <points_alert_limit>0</points_alert_limit>         
+            <main_conf>
+                <points_alert_limit>0</points_alert_limit>
             </main_conf>
             <admin_conf>
                 <test_mode>1</test_mode>
@@ -85,14 +90,14 @@
             </updates>
         </layout>
         <translate>
-           <modules>
-               <Smsapi_Sms>
-                   <files>
-                       <default>Smsapi_Sms.csv</default>
-                   </files>
-               </Smsapi_Sms>
-           </modules>
-       </translate>
+            <modules>
+                <Smsapi_Sms>
+                    <files>
+                        <default>Smsapi_Sms.csv</default>
+                    </files>
+                </Smsapi_Sms>
+            </modules>
+        </translate>
         <events>
             <admin_session_user_login_success>
                 <observers>
@@ -112,28 +117,39 @@
             </admin_system_config_changed_section_sms>
         </events>
         <acl>
-        <resources>
-          <all>
-            <title>Allow Everything</title>
-          </all>
-          <admin>
-            <children>
-              <system>
-                <children>
-                  <config>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
                     <children>
-                      <sms translate="title">
-                        <title>SMS API</title>
-                        <sort_order>100</sort_order>
-                      </sms>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <sms translate="title">
+                                            <title>SMS API</title>
+                                            <sort_order>100</sort_order>
+                                        </sms>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
                     </children>
-                  </config>
-                </children>
-              </system>
-            </children>
-          </admin>
-        </resources>
-      </acl>
+                </admin>
+            </resources>
+        </acl>
     </adminhtml>
-  
+    <frontend>
+        <routers>
+            <sms>
+                <use>standard</use>
+                <args>
+                    <module>Smsapi_Sms</module>
+                    <frontName>smsapi</frontName>
+                </args>
+            </sms>
+        </routers>
+    </frontend>
+
 </config>
