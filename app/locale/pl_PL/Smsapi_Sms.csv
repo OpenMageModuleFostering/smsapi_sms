@@ -74,6 +74,8 @@
 
 "SMS notification sent", "Powiadomienie SMS zostało wysłane"
 
-"SMS notification error", "Błąd wysyłki powiadomienia sms",
+"SMS notification error", "Błąd wysyłki powiadomienia sms"
 
 "You have used {TRACKINGNUMBER} variable but tracking number is not defined. Please delete {TRACKINGNUMBER} variable from the message.", "W wiadomości została użyta zmienna {TRACKINGNUMBER}, która nie jest zdefiniowana. Proszę usuń tę zmienną z wiadomości."
+
+"Authorization fail", "Błąd autoryzacji"

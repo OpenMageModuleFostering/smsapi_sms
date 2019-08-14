@@ -3,58 +3,44 @@
 
 /**
  * SMS API Configuration attributes class
- * 
+ *
  * @category   Smsapi
  * @package    SMS
  * @copyright  Copyright (c) 2012 Smsapi (http://smsapi.pl/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  * @author     Marek Jasiukiewicz <dev@jasiukiewicz.pl>
-* ...
-*/
+ * ...
+ */
+
+require_once dirname(dirname(__DIR__)) . '/smsapi-classes/SenderFactory.php';
+require_once dirname(dirname(__DIR__)) . '/smsapi-classes/Sender.php';
 
 
-class Smsapi_Sms_Model_Adminhtml_Attributes {
-    
-    
+class Smsapi_Sms_Model_Adminhtml_Attributes
+{
+
+
     /**
-     * Getting senders from SMSAPI and 
+     * Getting senders from SMSAPI and
      * generate attributes for configuration panel
-     * 
-     * 
+     *
+     *
      * @return array
      */
-    public function toOptionArray() {
+    public function toOptionArray()
+    {
 
-        $attributes = array(
-            //array('label'=>Mage::helper('sms')->__('Use ECO SMS (cheaper version without sender)'),'value'=>'eco_msg') //eco messages disabled
-        );
+        /**
+         * @var Smsapi_Sms_Model_Config $config
+         */
+        $config = Mage::getModel('sms/config');
 
-        
-        $api = Mage::getModel('sms/apiClient');
-        $config =   Mage::getModel('sms/config');
-        
         try {
-            
-            $response = $api->connect()->getSenders();
-            if ($response->result!=0)
-                return $attributes;
-
-            if (!empty($response->senders)) foreach ($response->senders as $sender) {
-                array_push($attributes, array('label'=>$sender,'value'=>$sender));
-            }
-
+            $senderFactory = new SenderFactory($config->getApiLogin(), $config->getApiPassword(), $config->getSmsapiVersion());
+            $sender = new Sender($senderFactory->getActionFactory(), null, null, '--DEFAULT--');
+            return $sender->getSenders();
+        } catch (\SMSApi\Exception\SmsapiException $e) {
+            return [Mage::helper('sms')->__('Authorization fail')];
         }
-        catch ( Exception $e) {
-             Mage::log('SMSAPI (getSenders()): '.$e->getMessage());
-        }
-        
-        if (empty($attributes))
-        	array_push($attributes, array('label'=>'SMSAPI.pl','value'=>'SMSAPI.pl'));
-        
-        return $attributes;
-        
     }
-    
-    
-    
 }

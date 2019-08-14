@@ -128,7 +128,7 @@
                                 <config>
                                     <children>
                                         <sms translate="title">
-                                            <title>SMS API</title>
+                                            <title>SMSAPI</title>
                                             <sort_order>100</sort_order>
                                         </sms>
                                     </children>

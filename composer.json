@@ -1,9 +1,9 @@
 {
     "name": "OpenMageModuleFostering/Smsapi_Sms",
     "type": "magento-module",
-    "license": "Open-Software-License-(OSL-3.0)",
+    "license": "Open-Source-License",
     "homepage": "",
-    "description": "SMS Plugin",
+    "description": "SMS Notifications",
     "authors": [
     {
         "name": "SMSAPI",

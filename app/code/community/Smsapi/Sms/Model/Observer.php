@@ -9,6 +9,12 @@
  * @author     Marek Jasiukiewicz <dev@jasiukiewicz.pl>
  * ...
  */
+
+require_once dirname(__DIR__) . '/smsapi-classes/UserFactory.php';
+require_once dirname(__DIR__) . '/smsapi-classes/User.php';
+require_once dirname(__DIR__) . '/smsapi-classes/SmsFactory.php';
+require_once dirname(__DIR__) . '/smsapi-classes/Sms.php';
+
 class Smsapi_Sms_Model_Observer
 {
 
@@ -20,7 +26,9 @@ class Smsapi_Sms_Model_Observer
 
     public function handleStatus($observer)
     {
-
+        /**
+         * @var Smsapi_Sms_Model_Config $config
+         */
         $config = Mage::getModel('sms/config');
         if ($config->isApiEnabled() == 0)
             return; //do nothing if api is disabled
@@ -69,27 +77,22 @@ class Smsapi_Sms_Model_Observer
             $message = strtr($message, $messageOrderData);
 
 
-            $api = Mage::getModel('sms/apiClient');
-            $api->connect();
+            $smsFactory = new SmsFactory($config->getApiLogin(), $config->getApiPassword(), $config->getSmsapiVersion());
+            $sms = new Sms($smsFactory->getActionFactory());
 
             //prepare sms content
-            $msg['recipient'] = $address->getData('telephone'); //or getBillingAddress
+            $msg['recipient'] = $address->getData('telephone');
             $msg['message'] = $message;
-            $msg['eco'] = $config->isEco(); //eco version - without sender
-            $msg['test'] = $config->testMode();
-            $msg['single_message'] = $config->isSingle(); //allow_long_sms
-            $msg['sender'] = $config->getSender();//sender
+            $msg['sender'] = $config->getSender();
 
-
-            //sending sms and getting API response
+            $options = array(
+                $config->isSingle()
+            );
 
             try {
-
-                $response = $api->msgContent($msg)->send();
-                $newComment = Mage::helper('sms')->__('SMS notification sent (SMS id:') . $response->response[0]->id . ') ';
+                $response = $sms->send($msg['recipient'], $msg['sender'], $msg['message'], $options);
+                $newComment = Mage::helper('sms')->__('SMS notification sent (SMS id:') . $response->getList()->response[0]->id . ') ';
                 $order->addStatusToHistory($newStatus, $newComment, true);
-
-
             } catch (Exception $e) {
                 $newComment = Mage::helper('sms')->__('SMS notification sending error: "') . $e->getMessage() . '"';
                 $order->addStatusToHistory($newStatus, $newComment, false);
@@ -113,6 +116,9 @@ class Smsapi_Sms_Model_Observer
 
     function checkPointsLimit()
     {
+        /**
+         * @var Smsapi_Sms_Model_Config $config
+         */
 
         $config = Mage::getModel('sms/config');
         if ($config->isApiEnabled() == 0) return;  //do nothing if api is disabled
@@ -125,13 +131,13 @@ class Smsapi_Sms_Model_Observer
 
         try {
 
-            $api = Mage::getModel('sms/apiClient');
-            $api->connect();
-            $res = $api->getPoints();
+            $userFactory = new UserFactory($config->getApiLogin(), $config->getApiPassword(), $config->getSmsapiVersion());
+            $user = new User($userFactory->getActionFactory());
+            $points = $user->getPoints();
 
-            if ($res->points < $limit) { //alert admin if API account balance is lower than $limit
+            if ($points < $limit) { //alert admin if API account balance is lower than $limit
 
-                Mage::getSingleton('core/session')->addError(Mage::helper('sms')->__($config::LOW_POINTS_WARNING_MESSAGE));
+                Mage::getSingleton('adminhtml/session')->addError(Mage::helper('sms')->__($config::LOW_POINTS_WARNING_MESSAGE));
 
             }
         } catch (Exception $e) {
@@ -146,23 +152,23 @@ class Smsapi_Sms_Model_Observer
      *
      * @return none
      */
-    public function  checkAuthorizationData()
+    public function checkAuthorizationData()
     {
+        /**
+         * @var Smsapi_Sms_Model_Config $config
+         */
         $config = Mage::getModel('sms/config');
         if ($config->isApiEnabled() == 0) return;  //do nothing if api is disabled
 
         if ($config->getApiLogin() && $config->getApiPassword()) {
 
             try {
-                $api = Mage::getModel('sms/apiClient');
-                $api->connect()->getPoints();
+                $userFactory = new UserFactory($config->getApiLogin(), $config->getApiPassword(), $config->getSmsapiVersion());
+                $user = new User($userFactory->getActionFactory());
+                $user->getPoints();
             } catch (Exception $e) {
-                Mage::getSingleton('core/session')->addError(Mage::helper('sms')->__('SMSAPI: Wrong Password and/or Username'));
+                Mage::getSingleton('adminhtml/session')->addError(Mage::helper('sms')->__('SMSAPI: Wrong Password and/or Username'));
             }
         }
-
-
     }
-
-
 }
