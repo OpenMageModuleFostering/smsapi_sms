@@ -35,7 +35,7 @@
 
     <modules>
         <Smsapi_Sms>
-            <version>0.1.3</version>
+            <version>0.2.1</version>
         </Smsapi_Sms>
     </modules>
 
@@ -85,7 +85,7 @@
         <layout>
             <updates>
                 <Smsapi_Sms>
-                    <file>Smsapi_Sms.xml</file>
+                    <file>smsapi_sms.xml</file>
                 </Smsapi_Sms>
             </updates>
         </layout>
