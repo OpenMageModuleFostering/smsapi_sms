@@ -23,6 +23,8 @@ class Smsapi_Sms_Model_Observer {
         if ($config->isApiEnabled()==0) return; //do nothing if api is disabled
                 
         $order = $observer->getEvent()->getOrder();
+        
+
         $newStatus =  $order->getData('status');
         $origStatus =  $order->getOrigData('status');
         
@@ -45,24 +47,31 @@ class Smsapi_Sms_Model_Observer {
             else 
                 $last_tracking_number = 'no_tracking'; //if no tracking number set "no_tracking" message for {TRACKINGNUMBER} template
 
+
+            $address = $order->getShippingAddress();
+            if (!$address)
+            	$address = $order->getBillingAddress();
                         
-            //getting order data to generate message template
-            $messageOrderData['{NAME}'] = $order->getShippingAddress()->getData('firstname');
-            $messageOrderData['{ORDERNUMBER}'] = $order->getIncrement_id();
-            $messageOrderData['{ORDERSTATUS}']  = $newStatus;
-            $messageOrderData['{TRACKINGNUMBER}'] = $last_tracking_number;
-            $messageOrderData['{STORENAME}'] = $config->getApiStoreName();
-            
-            $message = strtr($message,$messageOrderData);
-            
 
             try { //try to send message
-                
+
+            	
+            	//getting order data to generate message template
+            	$messageOrderData['{NAME}'] = $address->getData('firstname');
+            	$messageOrderData['{ORDERNUMBER}'] = $order->getIncrement_id();
+            	$messageOrderData['{ORDERSTATUS}']  = $newStatus;
+            	$messageOrderData['{TRACKINGNUMBER}'] = $last_tracking_number;
+            	$messageOrderData['{STORENAME}'] = $config->getApiStoreName();
+            	
+            	$message = strtr($message,$messageOrderData);
+            	 
+            	
+            	
                 $api = Mage::getModel('sms/apiClient');
                 $api->connect();
                 
                 //prepare sms content
-                $msg['recipient']       = $order->getShippingAddress()->getData('telephone'); //or getBillingAddress
+                $msg['recipient']       = $address->getData('telephone'); //or getBillingAddress
                 $msg['message']         = $message;
                 $msg['eco']             = $config->isEco(); //eco version - without sender
                 $msg['test']            = $config->testMode();
@@ -73,6 +82,7 @@ class Smsapi_Sms_Model_Observer {
                 //sending sms and getting API response
                 
                 try {
+                	
                     $response = $api->msgContent($msg)->send();
                     $newComment = Mage::helper('sms')->__('SMS notification sent (SMS id:').$response->response[0]->id.') ' ;
                     $order->addStatusToHistory($order->getStatus(),$newComment,true);

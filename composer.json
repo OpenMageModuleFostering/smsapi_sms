@@ -3,7 +3,7 @@
     "type": "magento-module",
     "license": "SMSAPI--licence",
     "homepage": "",
-    "description": "SMSAPI SMS module",
+    "description": "SMSAPI Module for Magento-based stores enables automatic send SMS notifications to customers.",
     "authors": [
     {
         "name": "Marek Jasiukiewicz",
