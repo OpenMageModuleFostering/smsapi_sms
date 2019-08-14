@@ -35,7 +35,7 @@
 
     <modules>
         <Smsapi_Sms>
-            <version>0.2.2</version>
+            <version>0.2.3</version>
         </Smsapi_Sms>
     </modules>
 
@@ -140,16 +140,16 @@
             </resources>
         </acl>
     </adminhtml>
-    <frontend>
+    <admin>
         <routers>
-            <sms>
-                <use>standard</use>
+            <adminhtml>
                 <args>
-                    <module>Smsapi_Sms</module>
-                    <frontName>smsapi</frontName>
+                    <modules>
+                        <Smsapi_Sms after="Mage_Adminhtml">Smsapi_Sms</Smsapi_Sms>
+                    </modules>
                 </args>
-            </sms>
+            </adminhtml>
         </routers>
-    </frontend>
+    </admin>
 
 </config>

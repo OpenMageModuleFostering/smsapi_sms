@@ -211,6 +211,8 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
         <fieldset>
             <div class="input-box">
                 <form id="messageform">
+                    <input type="hidden" name="form_key" value="<?php echo $this->getFormKey() ?>">
+
                     <div id="messages">
                         <ul class="messages" id="msgs">
                         </ul>
@@ -262,7 +264,7 @@ $orderStoreDate = $this->formatDate($_order->getCreatedAtStoreDate(), 'medium', 
         var msgs = document.getElementById("msgs");
 
         jQuery.ajax({
-                url: "<?php echo $this->getUrl('smsapi/index/sendsms') ?>",
+                url: "<?php echo Mage::getModel('adminhtml/url')->getUrl('adminhtml/smsapi/sendsms') ?>",
                 type: "POST",
                 data: jQuery("#messageform").serialize(),
                 success: function (data) {

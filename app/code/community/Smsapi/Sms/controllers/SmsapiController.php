@@ -7,7 +7,7 @@ require_once dirname(__DIR__) . '/smsapi-classes/Sender.php';
 require_once dirname(__DIR__) . '/smsapi-classes/SenderFactory.php';
 require_once dirname(__DIR__) . '/smsapi-classes/SmsFactory.php';
 
-class Smsapi_Sms_IndexController extends Mage_Core_Controller_Front_Action
+class Smsapi_Sms_SmsapiController extends Mage_Adminhtml_Controller_Action
 {
     public function sendsmsAction()
     {
