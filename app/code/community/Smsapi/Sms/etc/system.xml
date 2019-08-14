@@ -91,7 +91,7 @@
                         <show_in_website>1</show_in_website>
                         <show_in_store>1</show_in_store>
                    </apipassword>
-                                      
+
                    <storename translate="label">
                         <label>Store name</label>
                         <frontend_type>text</frontend_type>
@@ -100,7 +100,7 @@
                         <show_in_website>1</show_in_website>
                         <show_in_store>1</show_in_store>
                    </storename>
-                   
+
                    <sender translate="label comment">
                         <label>SMS Sender</label>
                         <frontend_type>select</frontend_type>
@@ -111,7 +111,7 @@
                         <show_in_store>1</show_in_store>
                         <comment>To add new SMS Sender go to "http://www.sms.pl" -> (left menu) USTAWIENIA -> POLA NADAWCY</comment>
                    </sender>
-                   
+
                    <allow_long_sms translate="label">
                         <label>Allow long messages (more than 160 chars)</label>
                         <frontend_type>select</frontend_type>
@@ -121,7 +121,7 @@
                         <show_in_website>1</show_in_website>
                         <show_in_store>1</show_in_store>
                    </allow_long_sms>
-                   
+
                    <points_alert_limit translate="label comment">
                         <label>Notify if my SMSAPI account points is below:</label>
                         <comment>0 - turn off/no alert</comment>
@@ -134,7 +134,7 @@
                    </points_alert_limit>
                 </fields>
             </main_conf>
-            
+
             <templates translate="label comment" module="sms">
                 <label>Message templates</label>
                 <frontend_type>text</frontend_type>
@@ -145,7 +145,7 @@
                 <show_in_store>1</show_in_store>
                 <expanded>1</expanded>
                 <fields>
-                    
+
                    <status_pending_payment_active translate="label">
                         <label>Send SMS after status changed to "Pending Payment"</label>
                         <frontend_type>select</frontend_type>
@@ -164,7 +164,7 @@
                         <show_in_store>1</show_in_store>
                         <depends><status_pending_payment_active>1</status_pending_payment_active></depends>
                    </status_pending_payment>
-                   
+
                    <status_holded_active translate="label">
                         <label>Send SMS after status changed to "On Hold"</label>
                         <frontend_type>select</frontend_type>
@@ -182,8 +182,8 @@
                         <show_in_website>1</show_in_website>
                         <show_in_store>1</show_in_store>
                         <depends><status_holded_active>1</status_holded_active></depends>
-                   </status_holded>                   
-                   
+                   </status_holded>
+
                    <status_processing_active translate="label">
                         <label>Send SMS after status changed to "Processing"</label>
                         <frontend_type>select</frontend_type>
@@ -202,7 +202,7 @@
                         <show_in_store>1</show_in_store>
                         <depends><status_processing_active>1</status_processing_active></depends>
                    </status_processing>
-                   
+
                    <status_canceled_active translate="label">
                         <label>Send SMS after status changed to "Canceled"</label>
                         <frontend_type>select</frontend_type>
@@ -221,7 +221,7 @@
                         <show_in_store>1</show_in_store>
                         <depends><status_canceled_active>1</status_canceled_active></depends>
                    </status_canceled>
-                   
+
                    <status_complete_active translate="label">
                         <label>Send SMS after status changed to "Complete"</label>
                         <frontend_type>select</frontend_type>
@@ -240,7 +240,7 @@
                         <show_in_store>1</show_in_store>
                         <depends><status_complete_active>1</status_complete_active></depends>
                    </status_complete>
-                   
+
                    <status_closed_active translate="label">
                         <label>Send SMS after status changed to "Closed"</label>
                         <frontend_type>select</frontend_type>
@@ -261,7 +261,7 @@
                    </status_closed>
                 </fields>
             </templates>
-            
+
             <admin_mode translate="label" module="sms">
                 <label>Test configuration</label>
                 <frontend_type>text</frontend_type>

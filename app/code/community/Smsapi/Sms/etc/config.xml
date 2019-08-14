@@ -35,7 +35,7 @@
 
     <modules>
         <Smsapi_Sms>
-            <version>0.1.1</version>
+            <version>0.1.2</version>
         </Smsapi_Sms>
     </modules>
 
@@ -50,16 +50,16 @@
                 <class>Smsapi_Sms_Model</class>
             </sms>
         </models>
-        <events>        
-            <sales_order_save_before>
-                <observers>
-                    <order_new_status>
-                        <class>Smsapi_Sms_Model_Observer</class>
-                        <method>handleStatus</method>
-                    </order_new_status>
-                </observers>
-            </sales_order_save_before>
-        </events>
+	    <events>
+		    <sales_order_save_commit_after>
+			    <observers>
+				    <smsapi_sms>
+					    <class>Smsapi_Sms_Model_Observer</class>
+					    <method>handleStatus</method>
+				    </smsapi_sms>
+			    </observers>
+		    </sales_order_save_commit_after>
+	    </events>
         <blocks>
             <sms>
                 <class>Smsapi_Sms_Block</class>

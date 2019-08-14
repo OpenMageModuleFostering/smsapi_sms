@@ -1,13 +1,13 @@
 {
     "name": "OpenMageModuleFostering/Smsapi_Sms",
     "type": "magento-module",
-    "license": "SMSAPI--licence",
+    "license": "OSL-3.0",
     "homepage": "",
-    "description": "SMSAPI Module for Magento-based stores enables automatic send SMS notifications to customers.",
+    "description": "SMS Module for Magento enables automatic sending SMS notifications.",
     "authors": [
     {
-        "name": "Marek Jasiukiewicz",
-        "email": "dev@jasiukiewicz.pl"
+        "name": "SMSAPI",
+        "email": "info@smsapi.pl"
     }
 ],
     "suggest": {
