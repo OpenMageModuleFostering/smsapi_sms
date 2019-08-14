@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Smsapi_Sms",
+    "type": "magento-module",
+    "license": "SMSAPI--licence",
+    "homepage": "",
+    "description": "SMSAPI SMS module",
+    "authors": [
+    {
+        "name": "Marek Jasiukiewicz",
+        "email": "dev@jasiukiewicz.pl"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

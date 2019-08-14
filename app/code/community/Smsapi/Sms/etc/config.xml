@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    File:  app/code/community/Smsapi/Sms/etc/config.xml
+
+    /**
+     * Smsapi SMS Module
+     *
+     * NOTICE OF LICENSE
+     *
+     * This source file is subject to the Open Software License (OSL 3.0)
+     * that is bundled with this package in the file LICENSE.txt.
+     * It is also available through the world-wide-web at this URL:
+     * http://opensource.org/licenses/osl-3.0.php
+     * If you did not receive a copy of the license and are unable to
+     * obtain it through the world-wide-web, please send an email
+     * to license@magentocommerce.com so we can send you a copy immediately.
+     *
+     * DISCLAIMER
+     *
+     * Do not edit or add to this file if you wish to upgrade Magento to newer
+     * versions in the future. If you wish to customize Magento for your
+     * needs please refer to http://www.magentocommerce.com for more information.
+     *
+     * Short Message Service (SMS) API
+     *
+     * @category   Smsapi
+     * @package    SMS
+     * @copyright  Copyright (c) 2012 Smsapi (http://smsapi.pl/)
+     * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+     * @author     Marek Jasiukiewicz <dev@jasiukiewicz.pl>
+*/
+
+-->
+<config>
+
+    <modules>
+        <Smsapi_Sms>
+            <version>0.1.0</version>
+        </Smsapi_Sms>
+    </modules>
+
+    <global>
+        <helpers>
+            <sms>
+                <class>Smsapi_Sms_Helper</class>
+            </sms>
+        </helpers>
+        <models>
+            <sms>
+                <class>Smsapi_Sms_Model</class>
+            </sms>
+        </models>
+        <events>        
+            <sales_order_save_before>
+                <observers>
+                    <order_new_status>
+                        <class>Smsapi_Sms_Model_Observer</class>
+                        <method>handleStatus</method>
+                    </order_new_status>
+                </observers>
+            </sales_order_save_before>
+        </events>
+        <blocks>
+            <sms>
+                <class>Smsapi_Sms_Block</class>
+            </sms>
+        </blocks>
+    </global>
+    <default>
+        <sms>
+            <main_conf>                
+                <points_alert_limit>0</points_alert_limit>         
+            </main_conf>
+            <admin_conf>
+                <test_mode>1</test_mode>
+            </admin_conf>
+        </sms>
+    </default>
+    <adminhtml>
+        <layout>
+            <updates>
+                <Smsapi_Sms>
+                    <file>Smsapi_Sms.xml</file>
+                </Smsapi_Sms>
+            </updates>
+        </layout>
+        <translate>
+           <modules>
+               <Smsapi_Sms>
+                   <files>
+                       <default>Smsapi_Sms.csv</default>
+                   </files>
+               </Smsapi_Sms>
+           </modules>
+       </translate>
+        <events>
+            <admin_session_user_login_success>
+                <observers>
+                    <sms_check_limits>
+                        <class>Smsapi_Sms_Model_Observer</class>
+                        <method>checkPointsLimit</method>
+                    </sms_check_limits>
+                </observers>
+            </admin_session_user_login_success>
+            <admin_system_config_changed_section_sms>
+                <observers>
+                    <sms_check_authorization_data>
+                        <class>Smsapi_Sms_Model_Observer</class>
+                        <method>checkAuthorizationData</method>
+                    </sms_check_authorization_data>
+                </observers>
+            </admin_system_config_changed_section_sms>
+        </events>
+        <acl>
+        <resources>
+          <all>
+            <title>Allow Everything</title>
+          </all>
+          <admin>
+            <children>
+              <system>
+                <children>
+                  <config>
+                    <children>
+                      <sms translate="title">
+                        <title>SMS API</title>
+                        <sort_order>100</sort_order>
+                      </sms>
+                    </children>
+                  </config>
+                </children>
+              </system>
+            </children>
+          </admin>
+        </resources>
+      </acl>
+    </adminhtml>
+  
+</config>
