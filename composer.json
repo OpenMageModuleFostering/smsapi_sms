@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Smsapi_Sms",
+    "name": "OpenMageModuleFostering\/Smsapi_Sms",
     "type": "magento-module",
     "license": "Open-Source-License",
     "homepage": "",
     "description": "SMS Notifications",
     "authors": [
-    {
-        "name": "SMSAPI",
-        "email": "bok@smsapi.pl"
-    }
-],
+        {
+            "name": "SMSAPI",
+            "email": "bok@smsapi.pl"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
